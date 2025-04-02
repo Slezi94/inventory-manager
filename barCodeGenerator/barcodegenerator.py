@@ -10,7 +10,7 @@ sheet = file.sheets["Leltár"]
 
 # Naplózás
 log_file = open(r"D:\Leltar\log.txt")
-logging.basicConfig(filename=r"C:\Users\slezakb\Documents\Leltar\log.txt", level=logging.DEBUG,
+logging.basicConfig(filename=r"D:\Leltar\log.txt", level=logging.DEBUG,
                     format='%(asctime)s - %(levelname)s - %(message)s', filemode='a')
 
 # Alert üzenet
@@ -44,7 +44,8 @@ patterns = {
     'Kijelző': ['TV', 'Monitor'],
     'Hálózati eszköz': ['Router', 'Switch', 'Patch panel', 'Modem'],
     'Telefon': ['Mobil'],
-    'Tartozék': ['Tok', 'Töltő', 'Táska', 'Hálókártya', 'Szünetmentes tápegység', 'Winchester', 'Dokkoló']
+    'Tartozék': ['Tok', 'Töltő', 'Táska', 'Hálókártya', 'Szünetmentes tápegység', 'Winchester', 'Dokkoló'],
+    'Szerver': ['Szerver', 'Kamera szerver']
 }
 
 # Meglévő vonalkódok feldolgozása
@@ -70,12 +71,16 @@ for i in range(len(barCodes)):
     category_code = "ETC"
     subcategory_code = "000"
 
-    for category, items in patterns.items():
+    for key, value in categories.items():
+        for category, items in patterns.items():
 
-        if descriptions[i] in items:
-            category_code = categories[category]
-            subcategory_code = subCategories.get(descriptions[i], "000")
-            print(subcategory_code)
+            if descriptions[i] in items:
+                category_code = categories[category]
+                subcategory_code = subCategories.get(descriptions[i], "000")
+                #print(subcategory_code)
+            elif descriptions[i] == key:
+                category_code = categories[key]
+                subcategory_code = subCategories.get(descriptions[i], "000")
 
     year = datetime.strftime(purchDates[i], "%Y") if purchDates[i] else "0000"
     base_code = f"{year}-{category_code}-{subcategory_code}"
