@@ -77,7 +77,6 @@ for i in range(len(barCodes)):
             if descriptions[i] in items:
                 category_code = categories[category]
                 subcategory_code = subCategories.get(descriptions[i], "000")
-                #print(subcategory_code)
             elif descriptions[i] == key:
                 category_code = categories[key]
                 subcategory_code = subCategories.get(descriptions[i], "000")
